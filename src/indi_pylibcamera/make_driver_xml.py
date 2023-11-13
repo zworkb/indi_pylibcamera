@@ -15,7 +15,7 @@ def make_driver_xml():
     """
     driversList = etree.Element("driversList")
     devGroup = etree.SubElement(driversList, "devGroup", {"group": "CCDs"})
-    device = etree.SubElement(devGroup, "device", {"label": "INDI pylibcamera", "manufacturer":"INDI pylibcamera"})
+    device = etree.SubElement(devGroup, "device", {"label": "INDI pylibcamera"})
     driver = etree.SubElement(device, "driver", {"name": "INDI pylibcamera"})
     driver.text = "indi_pylibcamera"
     version = etree.SubElement(device, "version")

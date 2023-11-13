@@ -9,12 +9,13 @@ Run it with root privileges.
 import sys
 import os
 import os.path
+import shutil
 
 
 default_indi_path = "/usr/share/indi"
 
 
-def create_Link(indi_path, overwrite=True):
+def create_Link(indi_path, overwrite=True, do_copy=True):
     xml_name = "indi_pylibcamera.xml"
     src = os.path.join(os.path.dirname(__file__), xml_name)
     dest = os.path.join(indi_path, xml_name)
@@ -28,7 +29,10 @@ def create_Link(indi_path, overwrite=True):
             print(f'ERROR: You need to run this with root permissions (sudo).')
             return -3
     try:
-        os.symlink(src, dest)
+        if do_copy:
+            shutil.copyfile(src, dest)
+        else:
+            os.symlink(src, dest)
     except FileExistsError:
         print(f'ERROR: File {dest} exists. Please remove it before running this script.')
         return -1
@@ -41,7 +45,7 @@ def create_Link(indi_path, overwrite=True):
     return 0
 
 
-def create_LinkInteractive(interactive, indi_path):
+def create_LinkInteractive(interactive, indi_path, do_copy=True):
     if interactive:
         print("""
 This script tells INDI about the installation of the indi_pylibcamera driver. It is only needed to run this
@@ -62,7 +66,7 @@ Please run this script with root privileges (sudo).
         if len(inp_indi_path) > 0:
             indi_path = inp_indi_path
         print(f'Creating symbolic link in {indi_path}...')
-    ret = create_Link(indi_path=indi_path, overwrite=True)
+    ret = create_Link(indi_path=indi_path, overwrite=True, do_copy=do_copy)
     if interactive:
         if ret == 0:
             print("Done.")
@@ -82,8 +86,9 @@ def main():
     parser.add_argument("-p", "--path", type=str, default=default_indi_path,
                         help=f'path to INDI driver XMLs, default: {default_indi_path}')
     args = parser.parse_args()
+    do_copy = True
     #
-    create_LinkInteractive(interactive=not args.silent, indi_path=args.path)
+    create_LinkInteractive(interactive=not args.silent, indi_path=args.path, do_copy=do_copy)
 
 
 if __name__ == "__main__":
