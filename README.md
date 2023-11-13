@@ -48,7 +48,16 @@ The command line to install all is:
 sudo apt-get install libcamera-apps indi-bin python3-picamera2 python3-lxml python3-astropy python3-numpy libcap-dev
 ```
 
-The `indi_pylibcamera` driver package is available on PyPi. Please install with:
+The `indi_pylibcamera` driver package is available on PyPi. Please install with the following steps:
+
+First upgrade pip itself, that avoids problemsduring the installation process.
+
+```commandline
+sudo pip3 install --upgrade pip
+```
+
+Then we install indi_pylibcamera itself:
+
 ```commandline
 sudo pip3 install indi_pylibcamera
 sudo indi_pylibcamera_postinstall -s
