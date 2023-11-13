@@ -45,13 +45,13 @@ safer to install these Python packages with `apt-get` too.
 
 The command line to install all is:
 ```commandline
-sudo apt-get install libcamera-apps indi-bin python3-picamera2 python3-lxml python3-astropy python3-numpy
+sudo apt-get install libcamera-apps indi-bin python3-picamera2 python3-lxml python3-astropy python3-numpy libcap-dev
 ```
 
 The `indi_pylibcamera` driver package is available on PyPi. Please install with:
 ```commandline
 sudo pip3 install indi_pylibcamera
-sudo indi_pylibcamera_postinstall
+sudo indi_pylibcamera_postinstall -s
 ```
 
 The `indi_pylibcamera_postinstall` script creates in `/usr/share/indi` a symbolic link to the driver XML. That makes
